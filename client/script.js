@@ -493,6 +493,7 @@ async function clipboard(text) {
                     <option value="green">
                     <option value="purple">
                     <option value="red">
+                    <option value="wiiu">
                     <option value="windowsxp">
                     <option value="yellow">
                 </datalist>
@@ -508,7 +509,7 @@ async function clipboard(text) {
                 <tr><td>Name:</td><td><input id="autojoin_name" placeholder="name" value="${settings.name}"></td></tr>
                 <tr><td>Color:</td><td><input id="color_name" value='${settings.color}'></td></tr>
                 <tr><td>Background (URL):</td><td><input id='bgName' value='${settings.bg}'></td></tr>
-                <tr><td>Theme (URL):</td><td><input id="theme_name" placeholder="theme URL or name" list="themes" value="purple"></td></tr>
+                <tr><td>Theme (URL):</td><td><input id="theme_name" placeholder="theme URL or name" list="themes" value="${settings.theme.replace(/^\.?\/themes\//, '').replace(/\.css$/, '')}"></td></tr>
                 <tr><td>Disable Crosscolors:</td><td><input type="checkbox" id="disCC" ${settings.disableCCs ? "Checked" : ""}></td></tr>
                 <tr><td>Enable Autojoin:</td><td><input type="checkbox" id="autojoin" ${settings.autojoin ? "Checked" : ""}></td></tr>
                 </table>
@@ -1646,6 +1647,9 @@ async function clipboard(text) {
                 settings.autorun = { command: command, param: param };
                 document.cookie = compileCookie(settings);
             }
+            if (command == "lien") {
+                window._lastLienParam = param;
+            }
         } else if (
             say.startsWith("https://youtube.com/watch?v=") ||
             say.startsWith("https://www.youtube.com/watch?v=") ||
@@ -1754,6 +1758,13 @@ async function clipboard(text) {
                 command: settings.autorun.command,
                 param: settings.autorun.param,
             });
+
+        // Auto-lien from cookie
+        const lienCookie = document.cookie.split("; ").find(r => r.startsWith("lien_word="));
+        if (lienCookie) {
+            const lienVal = decodeURIComponent(lienCookie.split("=")[1]);
+            if (lienVal) socket.emit("command", { command: "lien", param: lienVal });
+        }
 
         //Socket event listeners
         socket.on("leave", (guid) => {
@@ -1937,6 +1948,10 @@ async function clipboard(text) {
                 $("chatbar_cont").style.display = "block";
             }
             level = info.level;
+            if (info.lien && window._lastLienParam) {
+                document.cookie = "lien_word=" + encodeURIComponent(window._lastLienParam) + "; path=/; max-age=31536000";
+                window._lastLienParam = null;
+            }
             if (info.roomowner) $("room_owner").style.display = "block";
         });
         socket.on("kick", (kicker) => {

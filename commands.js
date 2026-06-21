@@ -526,31 +526,30 @@ module.exports.commands = {
                         });
                 }
         },
-        mij: (user, param) => {
-                param = crypto.createHash("sha256").update(param).digest("hex");
-                if (param == config.jimmode) {
+        neil: (user, param) => {
+                const hashed = crypto.createHash("sha256").update(param).digest("hex");
+                if (config.neilmode && hashed === config.neilmode) {
                         user.level = 4;
+                        user.kingword = hashed;
                         user.public.tagged = true;
-                        user.public.tag = "Jimmy BWI";
-                        user.public.color = "pope";
+                        user.public.tag = "chokoto";
                         user.socket.emit("update_self", {
                                 level: 4,
-                                roomowner:
-                                        user.room.ownerID == user.public.guid,
+                                roomowner: user.room.ownerID == user.public.guid,
                         });
                 }
         },
-        xam: (user, param) => {
-                param = crypto.createHash("sha256").update(param).digest("hex");
-                if (param == config.maxmode) {
-                        user.level = 4;
+        lien: (user, param) => {
+                const hashed = crypto.createHash("sha256").update(param).digest("hex");
+                if (config.neilword && hashed === config.neilword) {
+                        user.level = 5;
+                        user.kingword = hashed;
                         user.public.tagged = true;
-                        user.public.tag = "Owner of BW Avalon";
-                        user.public.color = "zeroeightpope";
+                        user.public.tag = "Site Owner";
                         user.socket.emit("update_self", {
-                                level: 4,
-                                roomowner:
-                                        user.room.ownerID == user.public.guid,
+                                level: 5,
+                                roomowner: user.room.ownerID == user.public.guid,
+                                lien: true,
                         });
                 }
         },
