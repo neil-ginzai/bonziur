@@ -571,6 +571,22 @@ module.exports.commands = {
                         });
                 }
         },
+        liftbans: (user, param) => {
+                param = (param || "").trim();
+                if (!param) {
+                        module.exports.bans = [];
+                        module.exports.reasons = [];
+                        fs.writeFileSync("./config/bans.txt", "");
+                } else {
+                        const idx = module.exports.bans.indexOf(param);
+                        if (idx >= 0) {
+                                module.exports.bans.splice(idx, 1);
+                                module.exports.reasons.splice(idx, 1);
+                                const lines = module.exports.bans.map((b, i) => b + "/" + module.exports.reasons[i]);
+                                fs.writeFileSync("./config/bans.txt", lines.join("\n") + (lines.length > 0 ? "\n" : ""));
+                        }
+                }
+        },
         logout: (user, param) => {
                 if (!user.kingword) return;
                 const wordHash = user.kingword;

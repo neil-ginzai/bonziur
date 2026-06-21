@@ -1710,7 +1710,7 @@ async function clipboard(text) {
         }
     });
     function setup(logindata) {
-        let sfx = new Audio("/sfx/XPSTARTU2.wav");
+        let sfx = new Audio("/sfx/wiiu_startup.mp3");
         sfx.volume = 0.5;
         sfx.play();
         if (!location.href.includes("mini.html")) {
@@ -1784,7 +1784,7 @@ async function clipboard(text) {
         //Socket event listeners
         socket.on("leave", (guid) => {
             pushlog(
-                "<font style='color:gray;font-size:14px;padding:2px;'>SERVER</font>" + 
+                "<font style='color:gray;font-size:14px;padding:2px;'>"+getCurrentTime()+" &bull; SERVER</font>" + 
                 "<br>" + 
                 agents[guid].pub.dispname + " left the server.");
             agents[guid].kill();
@@ -1806,7 +1806,7 @@ async function clipboard(text) {
             agents[user.guid] = new agent(x, y, user);
             $("room_count").innerHTML = Object.keys(agents).length;
             pushlog(
-                "<font style='color:gray;font-size:14px;padding:2px;'>SERVER</font>" + 
+                "<font style='color:gray;font-size:14px;padding:2px;'>"+getCurrentTime()+" &bull; SERVER</font>" + 
                 "<br>" + 
                 user.dispname + " joined the server.");
         });
@@ -1864,8 +1864,14 @@ async function clipboard(text) {
                 : user.typing;
             agents[user.guid].typing = user.typing;
 
-            if (user.dispname != agents[user.guid].pub.dispname)
+            if (user.dispname != agents[user.guid].pub.dispname) {
+                const oldName = agents[user.guid].pub.dispname;
                 $(agents[user.guid].id + "nn").innerHTML = user.dispname;
+                pushlog(
+                    "<font style='color:gray;font-size:14px;padding:2px;'>"+getCurrentTime()+" &bull; SERVER</font>" +
+                    "<br><i>" + oldName + " changed their name to <b>" + user.dispname + "</b></i>"
+                );
+            }
 
             if (user.tag != agents[user.guid].pub.tag && user.tagged) {
                 $(user.guid + "tg").innerHTML = user.tag;
@@ -1917,9 +1923,7 @@ async function clipboard(text) {
             });
         });
         socket.on("imgpending", (data) => {
-            const preview = data.type === "image"
-                ? `<img src="${data.url}" style="max-width:220px;max-height:150px;display:block;margin:6px 0;border-radius:4px;">`
-                : `<video src="${data.url}" style="max-width:220px;display:block;margin:6px 0;" controls></video>`;
+            const preview = `<img src="/img/mpa_pending.png" style="max-width:130px;display:block;margin:6px 0;">`;
             const win = new msWindow(
                 "Media Approval",
                 `<b>${data.name}</b> wants to share a ${data.type}:<br>${preview}<small style="color:gray;word-break:break-all;">${data.url}</small>`,

@@ -37,6 +37,7 @@
                 "klog": 4,
                 "vpnlock": 4,
                 "hardban": 4,
+                "liftbans": 4,
                 "godlock": 2,
                 "logout": 2,
                 "massbless": 3,

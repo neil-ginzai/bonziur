@@ -1,33 +1,57 @@
-#content{
-  font-family: "Segoe7", "Tahoma";
-  width: 75%;
-  margin: 32px auto;
-  padding: 32px;
-  background: url("./themes/reflections.png"), #f5d8ff8c;
-  background-size: cover;
-  box-shadow: inset -1px -1px 0px 0px #ff00e2, inset 0.1px 0.1px 1px 1px rgb(255 255 255 / 20%), 0px 0px 15px #000000;
-  border-radius: 10px;
-  border: 1px solid black;
+#content {
+  font-family: "Tahoma", sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  width: 72%;
+  margin: 36px auto;
+  padding: 32px 40px;
+  background: #ffffff;
+  border: 1px solid #c0d8e8;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 154, 199, 0.15);
+  color: #222;
 }
 
 @font-face {
-  font-family: Segoe7;
-  src: url("https://files.catbox.moe/7yqelg.ttf");
-}
-
-@font-face{
   font-family: "Tahoma";
   src: url("./Tahoma.woff");
 }
-body{
-  background-color: #4c0060;
-  align-items: center;
+
+body {
+  background: linear-gradient(160deg, #e8f4f8 0%, #d0eaf5 50%, #c5e4f0 100%);
+  min-height: 100vh;
+  margin: 0;
 }
-@keyframes rainbowtxt {
-  from{filter:hue-rotate(0deg)}
-  to{filter:hue-rotate(360deg)}
+
+hr {
+  border: none;
+  border-top: 1px solid #c0d8e8;
+  margin: 18px 0;
 }
-.rainb {
-  color:red;
-  animation: rainbowtxt 1s linear infinite;
+
+a {
+  color: #009ac7;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #006e99;
+}
+
+b {
+  color: #005580;
+}
+
+h1, h2, h3 {
+  color: #005580;
+  margin-bottom: 6px;
+}
+
+ol, ul {
+  padding-left: 22px;
+}
+
+li {
+  margin: 4px 0;
 }
