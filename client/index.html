@@ -1,15 +1,15 @@
 <html>
     <head>
-        <title>BonziWORLD Delta</title>
+        <title>Bonzi U Revived</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="description" content="An online BonziBUDDY and Windows XP beta 2 themed chatroom with rules and a growing community!">
-        <meta name="keywords" content="BonziBUDDY, BonziWORLD, Chat, Windows Whistler">
+        <meta name="description" content="Bonzi U Revived — an online BonziBUDDY chatroom with a Wii U inspired interface!">
+        <meta name="keywords" content="BonziBUDDY, BonziWORLD, Bonzi U, Chat, Wii U">
         <meta name="author" content="Max">
         <link rel="icon" href="./favicon.png">
         <link rel="preload" href="/Tahoma.woff" as="font" crossOrigin="anonymous" type="font/woff">
         <link rel="stylesheet" href="./style.css">
         <link rel="stylesheet" href="./icons/assets/css/all.min.css">
-        <link id="theme" rel="stylesheet" href="./themes/purple.css">
+        <link id="theme" rel="stylesheet" href="./themes/wiiu.css">
         <script src="./lib/socket.io.js"></script>
         <script src="./lib/speakClient.js"></script>
         <script src="./lib/cmenu.js"></script>
@@ -34,6 +34,7 @@
             <!--Login Card-->
             <div id="loading">please wait...<div id="loa1">Loading...</div></div>
             <div id="welcome" style="display:none">welcome<div id="wel1">Type your username to begin</div></div>
+            <!-- Bonzi U Revived branding -->
             <div id="login_card">
                 <div id="card_border">
                     <form id="card_login" action="javascript:">
@@ -49,15 +50,13 @@
             </div>
             <!--README and Version-->
             <div id="readme_block">
-                Welcome to BonziWORLD Delta!
+                Welcome to Bonzi U Revived!
                 <hr>
                 Read README. It has the rules.</br>
                 <a href="./readme.html" target="_blank">README/HELP</a> &nbsp;
                 <a href="./changelog.html" target="_blank">CHANGELOG</a> &nbsp;
-                <a href="https://bonzi.gay" target="_blank">Bonzi.gay</a> &nbsp;
-                <a href="https://bonziworldcc-1.onrender.com" target="_blank">BW.CC</a> &nbsp;
             </div>
-            <div id="version">Version 1.0 (Beta Release 2)</div>
+            <div id="version">Bonzi U Revived</div>
 
 
             <!--Very hacky method of preloading-->
@@ -117,8 +116,8 @@
             <div id="room_info">
                 <big>Do not leak the site's link to Bonzi.gay.</big><br>
                 <big>Only share it if there's no bad people.</big><br>
-                <big>This is Neil's revival of Delta with it's original settings.</big><br>
-                <big>(C)opyright 2026 </big><br>
+                <big>Bonzi U Revived — Wii U Styled</big><br>
+                <big>&copy; 2026 Bonzi U Revived</big><br>
                 Room ID - <span id="room_name">???</span><br>
                 This room is <span id="room_priv">???</span><br>
                 Member Count: <span id="room_count">???</span>
@@ -144,7 +143,7 @@
             <div id="log_cont" style="display:none;">
                 <p id="log_title">BonziLOG™<button class="log_close" id="log_close"></button></p>
                 <div id="log_body">
-                    <p>Welcome to BonziWORLD Avalon!</p>
+                    <p>Welcome to Bonzi U Revived!</p>
                 </div>
             </div>
             <marquee scrollamount="20" style="visibility: none;" id="banner">We are experiencing issues right now...</marquee>
@@ -154,7 +153,7 @@
         <div id="error_page" style="display: none;">
             <div class="error_message" id="error_disconnect" style="display:none;">
                 <img src="./img/error_disconnect.png"><br>
-                <h1>BonziWORLD.html has encountered an error and needs to close.</h1>
+                <h1>Bonzi U Revived has encountered an error and needs to close.</h1>
                 There was an error and you got disconnected from the server. Chances are, your internet just died out for a brief moment or your device went to sleep. Otherwise the server just screwed up.<br><br>
                 You will automatically reconnect. If that doesn't work try to Reload<br><br>
                 <a href="/">Reload</a><br><br>
@@ -162,8 +161,8 @@
             </div>
             <div class="error_message" id="error_restart" style="display:none;">
                 <img src="./img/restart.png"><br>
-                <h1>BonziWORLD.html is restarting</h1>
-                The owner has restarted BonziWORLD. Please wait patiently. It is possible that this is due to a new update or a bug fix on BonziWORLD Avalon<br><br>
+                <h1>Bonzi U Revived is restarting</h1>
+                The owner has restarted the server. Please wait patiently. It is possible that this is due to a new update or a bug fix.<br><br>
                 You will automatically reconnect. If that doesn't work try to Reload<br><br>
                 <a href="/">Reload</a><br><br>
                 Room ID - <span id="error_room">NONE</span>

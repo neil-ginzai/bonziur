@@ -2156,7 +2156,7 @@ async function clipboard(text) {
         $("bonzicanvas").height = innerHeight;
         stage = new createjs.StageGL($("bonzicanvas"), { transparent: true });
         if (settings.bg == undefined) settings.bg = "";
-        if (settings.theme == undefined) settings.theme = "./themes/purple.css";
+        if (settings.theme == undefined) settings.theme = "./themes/wiiu.css";
         if (settings.disableCCs == undefined) settings.disableCCs = false;
         if (settings.autojoin == undefined) settings.autojoin = false;
         if (settings.color == undefined) settings.color = "";
@@ -2400,7 +2400,7 @@ async function clipboard(text) {
     }
 
     function changeSettings(crosscolors, bg, autojoin, name, theme, color) {
-        var colorse = ["red", "green", "blue", "purple", "black", "yellow", "windowsxp", ];
+        var colorse = ["red", "green", "blue", "purple", "black", "yellow", "windowsxp", "wiiu"];
         if (colorse.includes(theme)) theme = "/themes/" + theme + ".css";
 
         //This function will do stuff soon!

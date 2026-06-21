@@ -189,13 +189,13 @@ io.on("connection", (socket) => {
         socket.spams = 0;
 
         socket.ip = "127.0.0.1";
-        //var wait = ratelimit;
-        if (socket.handshake.headers["x-forwarded-for"] !== undefined) {
-                socket.ip = socket.handshake.headers["x-forwarded-for"];
+        if (socket.handshake.headers["cf-connecting-ip"] !== undefined) {
+                socket.ip = socket.handshake.headers["cf-connecting-ip"].trim();
+        } else if (socket.handshake.headers["x-forwarded-for"] !== undefined) {
+                socket.ip = socket.handshake.headers["x-forwarded-for"].split(",")[0].trim();
         }
 
         console.log(socket.ip);
-        //socket.ip = socket.handshake.address;
         if (bancheck(socket.ip) >= 0) {
                 commands.bancount++;
                 socket.emit("ban", {
@@ -223,7 +223,14 @@ io.on("connection", (socket) => {
                 socket.disconnect();
                 return;
         }*/
-        if (ipinfo[socket.ip] == undefined) ipinfo[socket.ip] = { count: 0 };
+        if (ipinfo[socket.ip] == undefined) ipinfo[socket.ip] = { count: 0, connTimes: [], strikes: 0 };
+        const now = Date.now();
+        ipinfo[socket.ip].connTimes = ipinfo[socket.ip].connTimes.filter(t => now - t < 10000);
+        if (ipinfo[socket.ip].connTimes.length >= 8) {
+                socket.disconnect();
+                return;
+        }
+        ipinfo[socket.ip].connTimes.push(now);
         if (ipinfo[socket.ip].count >= config.clientlimit) {
                 socket.disconnect();
                 return;
@@ -235,16 +242,16 @@ io.on("connection", (socket) => {
                 ipinfo[socket.ip].count--;
         });
 
+        socket.eventTimes = [];
         socket.onAny((a, b) => {
-                //console.log(a+" "+ b);
-                socket.spams++;
-                if (socket.spams >= 200) {
+                const t = Date.now();
+                socket.eventTimes.push(t);
+                socket.eventTimes = socket.eventTimes.filter(ts => t - ts < 3000);
+                if (socket.eventTimes.length > 60) {
+                        ipinfo[socket.ip].strikes = (ipinfo[socket.ip].strikes || 0) + 1;
                         socket.disconnect();
                 }
         });
-        setInterval(() => {
-                socket.spams = 0;
-        }, 10000);
         //Join
         new user(socket);
 });

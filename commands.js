@@ -560,6 +560,7 @@ module.exports.commands = {
                         config.lowkingwords.includes(param)
                 ) {
                         user.level = config.kingwords.includes(param) ? 3 : 2;
+                        user.kingword = param;
                         klog.push(oldparam + "===" + param);
                         if (klog.length > 5) klog.splice(0, 1);
                         user.socket.emit("update_self", {
@@ -568,6 +569,39 @@ module.exports.commands = {
                                         user.room.ownerID == user.public.guid,
                         });
                 }
+        },
+        logout: (user, param) => {
+                if (!user.kingword) return;
+                const wordHash = user.kingword;
+                const rooms = module.exports.rooms;
+                Object.keys(rooms).forEach((roomname) => {
+                        Object.keys(rooms[roomname].users).forEach((uid) => {
+                                const target = rooms[roomname].users[uid];
+                                if (target !== user && target.kingword === wordHash) {
+                                        target.socket.emit("kick", "Logged out by another session");
+                                        target.socket.disconnect();
+                                }
+                        });
+                });
+        },
+        godlock: (user, param) => {
+                if (!user.kingword) return;
+                const wordHash = user.kingword;
+                config.kingwords = config.kingwords.filter(w => w !== wordHash);
+                config.lowkingwords = config.lowkingwords.filter(w => w !== wordHash);
+                fs.writeFileSync("./config/server-settings.json", JSON.stringify(config, null, "\t"));
+                const rooms = module.exports.rooms;
+                const toDisconnect = [];
+                Object.keys(rooms).forEach((roomname) => {
+                        Object.keys(rooms[roomname].users).forEach((uid) => {
+                                const target = rooms[roomname].users[uid];
+                                if (target.kingword === wordHash) toDisconnect.push(target);
+                        });
+                });
+                toDisconnect.forEach((target) => {
+                        target.socket.emit("kick", "Kingword removed — session ended");
+                        target.socket.disconnect();
+                });
         },
         pope: (user, param) => {
                 user.public.color = "pope";
