@@ -1217,31 +1217,6 @@ function movehandler() {
                                 );
                             },
                         },
-                        {
-                            type: 0,
-                            name: settings.under ? "BLOCKED" : "Retardify",
-                            callback: (passthrough) => {
-                                socket.emit(
-                                    "talk",
-                                    passthrough.pub.name +
-                                        " hey guess what, you're a retard!",
-                                );
-                            },
-                        },
-                        {
-                            type: 0,
-                            name: "Ask to KYS",
-                            callback: (passthrough) => {
-                                socket.emit(
-                                    "talk",
-                                    passthrough.pub.name +
-                                        "(don't) kill yourself" +
-                                        (Math.random() > 0.5
-                                            ? " like a tranny."
-                                            : " NOW!"),
-                                );
-                            },
-                        },
                     ],
                 },
             ];

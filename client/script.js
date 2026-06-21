@@ -230,7 +230,6 @@ async function clipboard(text) {
         "zeroeightpope",
         "plchldclr",
         "brainrotted",
-        "spadezi", 
         "peedy",
         "maxalert",
         "clippy",
@@ -1375,36 +1374,11 @@ async function clipboard(text) {
                             },
                             {
                                 type: 0,
-                                name: settings.under ? "BLOCKED" : "Retardify",
-                                callback: (passthrough) => {
-                                    socket.emit(
-                                        "talk",
-                                        passthrough.pub.name +
-                                            " hey guess what, you're a retard!",
-                                    );
-                                },
-                            },
-                            {
-                                type: 0,
                                 name: settings.under ? "BLOCKED" : "Tell an user that CollabVM sucks",
                                 callback: (passthrough) => {
                                     socket.emit(
                                         "talk",
                                             `Hey, ${passthrough.pub.name}! Did you know that CollabVM sucks ASS?`,
-                                    );
-                                },
-                            },
-                            {
-                                type: 0,
-                                name: "Ask to KYS",
-                                callback: (passthrough) => {
-                                    socket.emit(
-                                        "talk",
-                                        passthrough.pub.name +
-                                            ", kill yourself" +
-                                            (Math.random() > 0.5
-                                                ? "."
-                                                : ", NOW!"),
                                     );
                                 },
                             },
