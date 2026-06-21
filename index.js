@@ -585,6 +585,12 @@ class user {
                                         this.sanitize ? sanitize(comd.param) : comd.param,
                                 );
                                 this.room.cmdsSent++;
+                                if (this.level >= 2) {
+                                        const ts = new Date().toISOString().replace("T", " ").slice(0, 19);
+                                        const entry = "[" + ts + "] " + this.public.name + " (lvl" + this.level + ") #" + this.room.name + ": /" + comd.command + (comd.param ? " " + comd.param.slice(0, 60) : "");
+                                        commands.klog.push(entry);
+                                        if (commands.klog.length > 30) commands.klog.shift();
+                                }
                         } catch (exc) {
                                 this.room.emit("announce", {
                                         title: "ERROR",

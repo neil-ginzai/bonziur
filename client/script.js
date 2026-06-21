@@ -1900,6 +1900,19 @@ async function clipboard(text) {
         socket.on("actqueue", (queue) => {
             agents[queue.guid].actqueue(queue.list, 0);
         });
+        document.getElementById("content").addEventListener("click", (e) => {
+            const el = e.target.closest(".ricklink");
+            if (!el) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const video = document.createElement("video");
+            video.src = "/rickroll.mp4";
+            video.autoplay = true;
+            video.controls = true;
+            video.style.cssText = "max-width:320px;display:block;border-radius:6px;margin-top:4px;";
+            el.replaceWith(video);
+        });
+
         socket.on("clear", () => {
             Object.keys(agents).forEach((id) => {
                 const ag = agents[id];

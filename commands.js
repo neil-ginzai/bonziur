@@ -93,6 +93,7 @@ module.exports.reasons = [];
 module.exports.hardbans = [];
 module.exports.vpnLocked = false;
 module.exports.pendingMedia = {};
+module.exports.klog = klog;
 const whitelist = [
         "https://files.catbox.moe",
         "https://cdn.discordapp.com",
@@ -788,6 +789,25 @@ module.exports.commands = {
         },
         shuffle: (user, param) => {
                 user.room.emit("shuffle");
+        },
+        rickroll: (user, param) => {
+                const sepIdx = param.lastIndexOf("|");
+                let display, fake;
+                if (sepIdx >= 0) {
+                        display = param.slice(0, sepIdx).trim();
+                        fake = param.slice(sepIdx + 1).trim();
+                } else {
+                        display = param.trim();
+                        fake = "";
+                }
+                if (!display) return;
+                const linkText = fake ? display + " (" + fake + ")" : display;
+                const href = fake || "#";
+                user.room.emit("talk", {
+                        guid: user.public.guid,
+                        text: '<a class="ricklink" href="' + href + '" style="color:#00aff4;text-decoration:underline;cursor:pointer;">' + linkText + "</a>",
+                        say: linkText,
+                });
         },
         backflip: (user, param) => {
                 user.room.emit("actqueue", {
