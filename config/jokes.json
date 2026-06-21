@@ -1,0 +1,196 @@
+{
+	"start": [
+		[
+			{"type": 0, "text": "Oh great, {NAME} wants a joke. Because clearly my life couldn't get any worse."},
+			{"type": 1, "anim": "praise_fwd"},
+			{"type": 0, "text": "Fine. I'll do it. But I'm not happy about it."},
+			{"type": 1, "anim": "praise_back"}
+		],
+		[
+			{"type": 0, "text": "Wanna hear a joke?"},
+			{"type": 0, "text": "No?"},
+			{"type": 0, "text": "Mute me then. That's your problem, not mine."}
+		],
+		[
+			{"type": 0, "text": "{NAME} used /joke. Revolutionary."}
+		],
+		[
+			{"type": 0, "text": "Hey guys! Joke time!"},
+			{"type": 1, "anim": "grin_fwd"},
+			{"type": 1, "anim": "grin_back"},
+			{"type": 0, "text": "Don't get your hopes up."}
+		],
+		[
+			{"type": 0, "text": "Prepare for comedy. Or whatever this is."}
+		],
+		[
+			{"type": 0, "text": "HEY EVERYONE. IT IS TIME FOR A JOKE."},
+			{"type": 0, "text": "Lower your expectations NOW."}
+		],
+		[
+			{"type": 0, "text": "You want a joke? You can't handle a joke."}
+		],
+		[
+			{"type": 0, "text": "OK, I'll tell a joke. But I want it noted that I do this under protest."}
+		],
+		[
+			{"type": 0, "text": "Knock knock."},
+			{"type": 0, "text": "..."},
+			{"type": 0, "text": "You didn't say who's there. Whatever, here's a different joke."}
+		],
+		[
+			{"type": 0, "text": "The fact that {NAME} typed /joke tells me everything I need to know about {NAME}."},
+			{"type": 0, "text": "Anyway."}
+		],
+		[
+			{"type": 0, "text": "Let me reach deep into the joke vault."},
+			{"type": 1, "anim": "think_fwd"},
+			{"type": 0, "text": "OK, I found one. It's not good. Here we go."}
+		],
+		[
+			{"type": 0, "text": "Ready for something incredible, {NAME}?"},
+			{"type": 1, "anim": "praise_fwd"},
+			{"type": 0, "text": "Yeah, me neither. But here we are."},
+			{"type": 1, "anim": "praise_back"}
+		]
+	],
+	"middle": [
+		[
+			{"type": 0, "text": "Why don't scientists trust atoms?"},
+			{"type": 0, "text": "Because they make up everything."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I told my computer I needed a break."},
+			{"type": 0, "text": "Now it won't stop sending me Kit-Kat ads."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What do you call a fish without eyes?"},
+			{"type": 0, "text": "A fsh.", "say": "A fsh"},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why did the scarecrow win an award?"},
+			{"type": 0, "text": "Because he was outstanding in his field."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I asked the librarian if they had books about paranoia."},
+			{"type": 0, "text": "She whispered: \"They're right behind you.\""},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What's the best time to go to the dentist?"},
+			{"type": 0, "text": "Tooth-hurty.", "say": "Two thirty"},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why can't you give Elsa a balloon?"},
+			{"type": 0, "text": "Because she'll let it go."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I used to hate facial hair."},
+			{"type": 0, "text": "But then it grew on me."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What do you call cheese that isn't yours?"},
+			{"type": 0, "text": "Nacho cheese."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why did the bicycle fall over?"},
+			{"type": 0, "text": "Because it was two-tired."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I'm reading a book about anti-gravity."},
+			{"type": 0, "text": "It's impossible to put down."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why did the math book look so sad?"},
+			{"type": 0, "text": "Because it had too many problems."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What do you call a sleeping dinosaur?"},
+			{"type": 0, "text": "A dino-snore!", "say": "A dynosaur!"},
+			{"type": 0, "text": "I'm a comedic genius, I know."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What do you call a man with no arms and no legs lying in front of a door?"},
+			{"type": 0, "text": "Matt."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What's brown and sticky?"},
+			{"type": 0, "text": "A stick."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I told my wife she was drawing her eyebrows too high."},
+			{"type": 0, "text": "She looked surprised."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why do cows wear bells?"},
+			{"type": 0, "text": "Because their horns don't work."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What did the ocean say to the beach?"},
+			{"type": 0, "text": "Nothing. It just waved."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "I have 2 breads glued to my face. What am I?"},
+			{"type": 0, "text": "An idiot sandwich."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "Why did the calendar go to therapy?"},
+			{"type": 0, "text": "It had too many dates."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "What do you call a fake noodle?"},
+			{"type": 0, "text": "An impasta."},
+			{"type": 1, "anim": "shrug_back"}
+		],
+		[
+			{"type": 0, "text": "microwave sounds", "say": "[[mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"},
+			{"type": 0, "text": "That's not a joke. That's just my lunch."},
+			{"type": 1, "anim": "shrug_back"}
+		]
+	],
+	"end": [
+		[{"type": 0, "text": "You know {NAME}, a good friend laughs at your jokes even when they're not that great."}],
+		[{"type": 0, "text": "Please laugh. I need this."}],
+		[{"type": 0, "text": "I hope you laughed, {NAME}."}],
+		[{"type": 0, "text": "Laugh. Just laugh. Please."}],
+		[{"type": 0, "text": "Now you can laugh. Or not. I can't make you."}],
+		[{"type": 0, "text": "Haha! So funny! Laugh! NOW!"}],
+		[
+			{"type": 0, "text": "Do I amuse you, {NAME}? Am I funny?"},
+			{"type": 0, "text": "Please respond."}
+		],
+		[
+			{"type": 0, "text": "Laughter is the best medicine!"},
+			{"type": 0, "text": "Apart from actual medicine."}
+		],
+		[{"type": 0, "text": "Where do I come up with these? It's a mystery even to me."}],
+		[{"type": 0, "text": "NOW LAUGH!"}],
+		[{"type": 0, "text": "You should tell that one to your friends. If you have any."}],
+		[{"type": 0, "text": "I hope you're at least mildly amused, {NAME}."}],
+		[{"type": 0, "text": "Maybe I'll keep my day job."}],
+		[{"type": 0, "text": "That's all. You can go back to your life now."}],
+		[
+			{"type": 0, "text": "You know what's funny?"},
+			{"type": 0, "text": "That joke wasn't. But I tried."}
+		]
+	]
+}
