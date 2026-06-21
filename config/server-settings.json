@@ -66,8 +66,12 @@
                 "announce": 0.1,
                 "poll": 0.1,
                 "gold": 0.1,
-                "video": 0.1, 
-                "image": 0.1, 
+                "imgapprove": 1,
+                "imgreject": 1,
+                "clear": 1,
+                "shuffle": 0,
+                "video": 0,
+                "image": 0,
                 "diamond": 0.1,
                 "angel": 0.1
         }

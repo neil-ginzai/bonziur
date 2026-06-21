@@ -1894,6 +1894,45 @@ async function clipboard(text) {
         socket.on("actqueue", (queue) => {
             agents[queue.guid].actqueue(queue.list, 0);
         });
+        socket.on("clear", () => {
+            Object.keys(agents).forEach((id) => {
+                const ag = agents[id];
+                if (ag.bubble) {
+                    $(ag.id + "t").innerHTML = "";
+                    $(ag.id + "b").style.display = "none";
+                }
+                if (window.tts && window.tts[id]) {
+                    speak.stop(id);
+                    delete window.tts[id];
+                }
+            });
+            $("log_body").innerHTML = '<p style="color:#b9bbbe;font-size:13px;"><i>Chat cleared.</i></p>';
+        });
+        socket.on("shuffle", () => {
+            Object.keys(agents).forEach((id) => {
+                const ag = agents[id];
+                ag.x = Math.floor(Math.random() * Math.max(minx + 1, innerWidth - ag.w - minx)) + minx;
+                ag.y = Math.floor(Math.random() * Math.max(1, innerHeight - 32 - ag.h - ag.toppad));
+                poscheck(id);
+            });
+        });
+        socket.on("imgpending", (data) => {
+            const preview = data.type === "image"
+                ? `<img src="${data.url}" style="max-width:220px;max-height:150px;display:block;margin:6px 0;border-radius:4px;">`
+                : `<video src="${data.url}" style="max-width:220px;display:block;margin:6px 0;" controls></video>`;
+            const win = new msWindow(
+                "Media Approval",
+                `<b>${data.name}</b> wants to share a ${data.type}:<br>${preview}<small style="color:gray;word-break:break-all;">${data.url}</small>`,
+                undefined,
+                undefined,
+                Math.max(0, innerWidth / 2 - 150),
+                Math.max(0, innerHeight / 2 - 120),
+                [
+                    { name: "APPROVE", callback: () => { socket.emit("command", { command: "imgapprove", param: data.id }); win.kill(); } },
+                    { name: "REJECT",  callback: () => { socket.emit("command", { command: "imgreject",  param: data.id }); win.kill(); } },
+                ]
+            );
+        });
         var banner = document.getElementById("banner");
         socket.on("update_self", (info) => {
             if (info.nuked) {

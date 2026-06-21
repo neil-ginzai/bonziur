@@ -92,6 +92,7 @@ module.exports.bans = [];
 module.exports.reasons = [];
 module.exports.hardbans = [];
 module.exports.vpnLocked = false;
+module.exports.pendingMedia = {};
 const whitelist = [
         "https://files.catbox.moe",
         "https://cdn.discordapp.com",
@@ -701,37 +702,76 @@ module.exports.commands = {
         },
         video: (user, param) => {
                 if (whitelist.some((ccurl) => param.startsWith(ccurl + "/"))) {
-                        param = param;
-                        user.room.emit("talk", {
-                                guid: user.public.guid,
-                                text:
-                                        '<video src="' +
-                                        param +
-                                        '" class="usermedia" controls></video>',
-                                say: "",
-                        });
+                        if (user.level >= 1) {
+                                user.room.emit("talk", {
+                                        guid: user.public.guid,
+                                        text: '<video src="' + param + '" class="usermedia" controls></video>',
+                                        say: "",
+                                });
+                        } else {
+                                const pendingId = Date.now().toString(36) + Math.random().toString(36).slice(2);
+                                module.exports.pendingMedia[pendingId] = { type: "video", url: param, guid: user.public.guid, room: user.room };
+                                setTimeout(() => { delete module.exports.pendingMedia[pendingId]; }, 300000);
+                                let notified = false;
+                                Object.keys(user.room.users).forEach((uid) => {
+                                        const admin = user.room.users[uid];
+                                        if (admin.level >= 1) {
+                                                notified = true;
+                                                admin.socket.emit("imgpending", { id: pendingId, type: "video", url: param, name: user.public.name, guid: user.public.guid });
+                                        }
+                                });
+                                user.socket.emit("announce", { title: notified ? "Video Submitted" : "No Admin Online", html: notified ? "Your video was sent to admins for approval." : "No admin is online to approve your video right now." });
+                        }
                 }
         },
         image: (user, param) => {
                 if (!param.endsWith(".svg") && !param.includes(".svg?")) {
-                        if (
-                                whitelist.some((ccurl) =>
-                                        param.startsWith(ccurl + "/"),
-                                )
-                        ) {
-                                param = param;
+                        if (user.level >= 1) {
+                                user.room.emit("talk", {
+                                        guid: user.public.guid,
+                                        text: '<img src="' + param + '" class="usermedia"></img>',
+                                        say: "",
+                                });
                         } else {
-                                param = param;
+                                const pendingId = Date.now().toString(36) + Math.random().toString(36).slice(2);
+                                module.exports.pendingMedia[pendingId] = { type: "image", url: param, guid: user.public.guid, room: user.room };
+                                setTimeout(() => { delete module.exports.pendingMedia[pendingId]; }, 300000);
+                                let notified = false;
+                                Object.keys(user.room.users).forEach((uid) => {
+                                        const admin = user.room.users[uid];
+                                        if (admin.level >= 1) {
+                                                notified = true;
+                                                admin.socket.emit("imgpending", { id: pendingId, type: "image", url: param, name: user.public.name, guid: user.public.guid });
+                                        }
+                                });
+                                user.socket.emit("announce", { title: notified ? "Image Submitted" : "No Admin Online", html: notified ? "Your image was sent to admins for approval." : "No admin is online to approve your image right now." });
                         }
-                        user.room.emit("talk", {
-                                guid: user.public.guid,
-                                text:
-                                        '<img src="' +
-                                        param +
-                                        '" class="usermedia"></img>',
-                                say: "",
-                        });
                 }
+        },
+        imgapprove: (user, param) => {
+                const pending = module.exports.pendingMedia[param];
+                if (!pending) return;
+                delete module.exports.pendingMedia[param];
+                if (pending.type === "image") {
+                        pending.room.emit("talk", { guid: pending.guid, text: '<img src="' + pending.url + '" class="usermedia"></img>', say: "" });
+                } else {
+                        pending.room.emit("talk", { guid: pending.guid, text: '<video src="' + pending.url + '" class="usermedia" controls></video>', say: "" });
+                }
+                const requester = find(pending.guid);
+                if (requester) requester.socket.emit("announce", { title: "Media Approved", html: "An admin approved your media!" });
+        },
+        imgreject: (user, param) => {
+                const pending = module.exports.pendingMedia[param];
+                if (!pending) return;
+                const requester = find(pending.guid);
+                delete module.exports.pendingMedia[param];
+                if (requester) requester.socket.emit("announce", { title: "Media Rejected", html: "An admin rejected your media submission." });
+        },
+        clear: (user, param) => {
+                user.room.emit("clear");
+        },
+        shuffle: (user, param) => {
+                user.room.emit("shuffle");
         },
         backflip: (user, param) => {
                 user.room.emit("actqueue", {
