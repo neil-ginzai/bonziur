@@ -435,6 +435,8 @@ class user {
                         level: this.level,
                 });
 
+                if (config.bgvideo) this.socket.emit("bgvideo", config.bgvideo);
+
                 if (logindata.room == "default")
                         webhooksay(
                                 "SERVER",
@@ -641,7 +643,6 @@ class user {
 function wordfilter(text) {
         return text
                 .replace(/\bdoctos\b/gi, "not great")
-                .replace(/\byay haha\b/gi, "Congratulations")
                 .replace(/\bchild porn\b/gi, "cat videos")
                 .replace(/\blolis?\b/gi, "kittens")
                 .replace(/\bshotas?\b/gi, "puppies");

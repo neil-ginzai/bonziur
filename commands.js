@@ -701,6 +701,24 @@ module.exports.commands = {
                         user.room.emit("alert", { alert: param });
                 }
         },
+        byoutube: (user, param) => {
+                if (user.level < 2) return;
+                param = param.trim();
+                const off = param === "" || param.toLowerCase() === "off";
+                if (!off) {
+                        const m = param.match(/^.*((youtu\.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/);
+                        const vid = m && m[7] ? m[7] : param;
+                        config.bgvideo = vid;
+                } else {
+                        config.bgvideo = null;
+                }
+                try {
+                        const s = JSON.parse(fs.readFileSync("./config/server-settings.json", "utf8"));
+                        s.bgvideo = config.bgvideo;
+                        fs.writeFileSync("./config/server-settings.json", JSON.stringify(s, null, "\t"));
+                } catch(e) {}
+                user.room.emit("bgvideo", config.bgvideo);
+        },
         youtube: (user, param) => {
                 param = param.match(
                         /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/,
@@ -736,6 +754,7 @@ module.exports.commands = {
                                                 admin.socket.emit("imgpending", { id: pendingId, type: "video", url: param, name: user.public.name, guid: user.public.guid });
                                         }
                                 });
+                                user.room.emit("imgchat", { real: param, type: "video", name: user.public.name, guid: user.public.guid });
                                 user.socket.emit("announce", { title: notified ? "Video Submitted" : "No Admin Online", html: notified ? "Your video was sent to admins for approval." : "No admin is online to approve your video right now." });
                         }
                 }
@@ -760,6 +779,7 @@ module.exports.commands = {
                                                 admin.socket.emit("imgpending", { id: pendingId, type: "image", url: param, name: user.public.name, guid: user.public.guid });
                                         }
                                 });
+                                user.room.emit("imgchat", { real: param, type: "image", name: user.public.name, guid: user.public.guid });
                                 user.socket.emit("announce", { title: notified ? "Image Submitted" : "No Admin Online", html: notified ? "Your image was sent to admins for approval." : "No admin is online to approve your image right now." });
                         }
                 }

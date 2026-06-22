@@ -918,36 +918,7 @@ async function clipboard(text) {
                 $(this.id + "b").style.display = "block";
                 if (say.startsWith("-") || this.ttsmute) say = "";
                 else
-                    say = desanitize(say)
-                        .replace(/wtf/g, "what the fuck")
-                        .replace(/tf/g, "the fuck")
-                        .replace(/wth/g, "what the hell")
-                        .replace(/omg/g, "oh my god")
-                        .replace(/ftlog/g, "for the love of god")
-                        .replace(/omfg/g, "oh my fucking god")
-                        .replace(/oml/g, "oh my lord")
-                        .replace(/idc/g, "i don't care")
-                        .replace(/idgaf/g, "i don't give a fuck")
-                        .replace(/idgad/g, "i don't give a damn")
-                        .replace(/idgas/g, "i don't give a shit")
-                        .replace(/sybau/g, "shut your bitchass up")
-                        .replace(/syau/g, "shut your ass up")
-                        .replace(/stfu/g, "shut the fuck up")
-                        .replace(/syfm/g, "shut your fucking mouth")
-                        .replace(/sym/g, "shut your mouth")
-                        .replace(/gtfo/g, "get the fuck out")
-                        .replace(/gtho/g, "get the hell out")
-                        .replace(/lmao/g, "laughing my ass off")
-                        .replace(/lmbo/g, "laughing my butt off")
-                        .replace(/lmfao/g, "laughing my fucking ass off")
-                        .replace(/rofl/g, "rolling on floor laughing")
-                        .replace(/idk/g, "i don't know")
-                        .replace(/idfk/g, "i don't fucking know")
-                        .replace(/wtaf/g, "what the actual fuck")
-                        .replace(/lol/g, "laughing out loud")
-                        .replace(/thx/g, "thanks")
-                        .replace(/ etc/gi, "E T C")
-                        .replace(/ eg/gi, "egg");
+                    say = desanitize(say);
                 if (say != "")
                     speak.play(say, this.id, this.pub.voice, () => {
                         delete window.tts[this.id];
@@ -1048,10 +1019,7 @@ async function clipboard(text) {
                     $(this.id + "b").style.display = "block";
                     if (!this.ttsmute)
                         speak.play(
-                            list[i].say
-                                // .replace(/[!:;]/g, "") // You can't say exclamation...
-                                .replace(/ etc/gi, "E T C")
-                                .replace(/ eg/gi, "egg"),
+                            list[i].say,
                             this.id,
                             this.pub.voice,
                             () => {
@@ -1919,6 +1887,36 @@ async function clipboard(text) {
                 ag.y = Math.floor(Math.random() * Math.max(1, innerHeight - 32 - ag.h - ag.toppad));
                 poscheck(id);
             });
+        });
+        socket.on("bgvideo", (vid) => {
+            const wrap = $("bgvideo_wrap");
+            const frame = $("bgvideo_frame");
+            const ctrl = $("bgvideo_ctrl");
+            if (vid) {
+                frame.src = "https://www.youtube.com/embed/" + vid +
+                    "?autoplay=1&loop=1&playlist=" + vid + "&controls=0&modestbranding=1&mute=0";
+                wrap.style.display = "block";
+                if (level >= 2) ctrl.style.display = "block";
+            } else {
+                frame.src = "";
+                wrap.style.display = "none";
+                ctrl.style.display = "none";
+            }
+        });
+        document.getElementById("bgvideo_ctrl").addEventListener("click", () => {
+            socket.emit("command", { command: "byoutube", param: "off" });
+        });
+        socket.on("imgchat", (data) => {
+            const isAdmin = level >= 2;
+            const mediaHtml = isAdmin
+                ? (data.type === "image"
+                    ? `<img src="${data.real}" class="usermedia">`
+                    : `<video src="${data.real}" class="usermedia" controls></video>`)
+                : `<img src="/img/mpa_pending.png" style="max-width:130px;display:block;margin:6px 0;">`;
+            pushlog(
+                "<font style='color:gray;font-size:14px;padding:2px;'>" + getCurrentTime() + " &bull; PENDING</font><br>" +
+                "<b>" + data.name + "</b> submitted a " + data.type + " for approval:<br>" + mediaHtml
+            );
         });
         socket.on("imgpending", (data) => {
             const preview = `<img src="/img/mpa_pending.png" style="max-width:130px;display:block;margin:6px 0;">`;
