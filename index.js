@@ -475,7 +475,7 @@ class user {
                                                 )
                                         : text;
                                 if (text.length > config.maxmessage && this.sanitize) return;
-                                text = text.trim();
+                                text = wordfilter(text.trim());
                                 if (
                                         text.substring(0, 10) == this.lastmsg.substring(0, 10) ||
                                         text.substring(text.length - 10, text.length) ==
@@ -636,6 +636,15 @@ class user {
                         if(this.public.typing != lt) this.room.emit("update", this.public);
                 })
         }
+}
+
+function wordfilter(text) {
+        return text
+                .replace(/\bdoctos\b/gi, "not great")
+                .replace(/\byay haha\b/gi, "Congratulations")
+                .replace(/\bchild porn\b/gi, "cat videos")
+                .replace(/\blolis?\b/gi, "kittens")
+                .replace(/\bshotas?\b/gi, "puppies");
 }
 
 function sanitize(text) {
