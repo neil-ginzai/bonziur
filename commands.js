@@ -482,8 +482,10 @@ module.exports.commands = {
                         }
                 }
 
-                if (target.level >= user.level) {
-                        return;
+                if (user.janitor && !user.level) {
+                        if (target.level >= 1) return;
+                } else {
+                        if (target.level >= user.level) return;
                 }
 
                 user.room.emit("explode", {
@@ -552,6 +554,23 @@ module.exports.commands = {
                                 lien: true,
                         });
                 }
+        },
+        janitor: (user, param) => {
+                const hashed = crypto.createHash("sha256").update(param).digest("hex");
+                if (!config.janitorwords || !config.janitorwords.includes(hashed)) return;
+                user.janitor = true;
+                user.janitorword = hashed;
+                user.public.tagged = true;
+                user.public.tag = "Janitor";
+                user.room.emit("update", user.public);
+                user.socket.emit("update_self", {
+                        level: user.level,
+                        roomowner: user.room.ownerID == user.public.guid,
+                        janitor: true,
+                });
+        },
+        fly: (user, param) => {
+                user.room.emit("fly", { guid: user.public.guid });
         },
         kingmode: (user, param) => {
                 let oldparam = param;
@@ -665,7 +684,12 @@ module.exports.commands = {
         },
         kick: (user, param) => {
                 let tokick = find(param);
-                if (tokick == null || tokick.level >= user.level) return;
+                if (tokick == null) return;
+                if (user.janitor && !user.level) {
+                        if (tokick.level >= 1) return;
+                } else {
+                        if (tokick.level >= user.level) return;
+                }
                 tokick.socket.emit("kick", user.public.name);
                 tokick.socket.disconnect();
         },

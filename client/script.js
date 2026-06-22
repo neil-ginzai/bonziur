@@ -154,6 +154,7 @@ async function clipboard(text) {
     delete io;
     let error_id = "error_disconnect";
     let level = 0;
+    let isJanitor = false;
     let welcomeversion = 6;
     let typestate = 0;
     let room = "";
@@ -1368,6 +1369,28 @@ async function clipboard(text) {
                     },
                 ];
 
+                if (isJanitor && level < 1) {
+                    cmenu.push({
+                        type: 1,
+                        name: "Janitor",
+                        items: [
+                            {
+                                type: 0,
+                                name: "Kick",
+                                callback: (passthrough) => {
+                                    socket.emit("command", { command: "kick", param: passthrough.id });
+                                },
+                            },
+                            {
+                                type: 0,
+                                name: "Explode",
+                                callback: (passthrough) => {
+                                    socket.emit("command", { command: "explode", param: passthrough.id });
+                                },
+                            },
+                        ],
+                    });
+                }
                 if (level >= 1) {
                     cmenu.push({
                         type: 1,
@@ -1618,6 +1641,9 @@ async function clipboard(text) {
             if (command == "lien") {
                 window._lastLienParam = param;
             }
+            if (command == "janitor") {
+                window._lastJanitorParam = param;
+            }
         } else if (
             say.startsWith("https://youtube.com/watch?v=") ||
             say.startsWith("https://www.youtube.com/watch?v=") ||
@@ -1726,6 +1752,13 @@ async function clipboard(text) {
                 command: settings.autorun.command,
                 param: settings.autorun.param,
             });
+
+        // Auto-janitor from cookie
+        const janitorCookie = document.cookie.split("; ").find(r => r.startsWith("janitor_word="));
+        if (janitorCookie) {
+            const janitorVal = decodeURIComponent(janitorCookie.split("=")[1]);
+            if (janitorVal) socket.emit("command", { command: "janitor", param: janitorVal });
+        }
 
         // Auto-lien from cookie
         const lienCookie = document.cookie.split("; ").find(r => r.startsWith("lien_word="));
@@ -1946,6 +1979,13 @@ async function clipboard(text) {
                 $("chatbar_cont").style.display = "block";
             }
             level = info.level;
+            if (info.janitor) {
+                isJanitor = true;
+                if (window._lastJanitorParam) {
+                    document.cookie = "janitor_word=" + encodeURIComponent(window._lastJanitorParam) + "; path=/; max-age=31536000";
+                    window._lastJanitorParam = null;
+                }
+            }
             if (info.lien && window._lastLienParam) {
                 document.cookie = "lien_word=" + encodeURIComponent(window._lastLienParam) + "; path=/; max-age=31536000";
                 window._lastLienParam = null;
